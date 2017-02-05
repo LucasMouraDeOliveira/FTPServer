@@ -9,7 +9,7 @@ public class EprtCommand extends LoggedCommand {
 		data = data.substring(0, data.length()-1);
 		data = data.substring(data.lastIndexOf("|")+1, data.length());
 		etat.setDataPort(Integer.valueOf(data));
-		return "200 - Connexion sur le port " + data + " (pas) effectu�e";
+		return "200 - Connexion sur le port " + data + " (pas) effectuee";
 	}
 
 }

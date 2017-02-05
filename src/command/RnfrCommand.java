@@ -1,13 +1,14 @@
 package command;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import utilitary.UserHandler;
 import utilitary.UserState;
 
-public class MkdCommand extends LoggedCommand {
+public class RnfrCommand extends LoggedCommand {
 
 	@Override
 	public String executeLogged(String data, UserState etat) {
@@ -17,11 +18,15 @@ public class MkdCommand extends LoggedCommand {
 		Path p  = Paths.get(etat.getRepository());
 		Path p2 = p.resolve(data);
 		File f = p2.toFile();
-		if(f.exists()){
-			return "403 - le dossier exist deja";
+		if(!f.exists()){
+			return "400 - le fichier n'existe pas";
 		}else if(UserHandler.userHaveRight(etat.getUser(), f)){
 			return "403 - vous ne pouvez supprimer ce fichier";
 		}
-		return f.mkdir() ? "200" : "400";
+		etat.setRenameFile(f);
+		return "350 - ok je le renomme en quoi";
 	}
+
+	
+
 }

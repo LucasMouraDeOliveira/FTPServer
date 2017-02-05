@@ -10,7 +10,7 @@ public class UserCommand extends Command {
 		if(UserHandler.userExists(data)){
 			etat.setUser(data);
 			System.out.println("Utilisateur " + etat.getUser() + " tente de se connecter");
-			return "331 - Vas y continue tu m'int�resses";
+			return "331 - Vas y continue tu m'interesses";
 		}
 		return "430 - Je te connais pas mec ...";
 	}

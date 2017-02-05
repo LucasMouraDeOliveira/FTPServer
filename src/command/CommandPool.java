@@ -23,10 +23,16 @@ public class CommandPool {
 		this.commands.put("NLST", new NlstCommand());
 		this.commands.put("FEAT", new FeatCommand());
 		this.commands.put("PWD", new PwdCommand());
+		this.commands.put("XPWD", new PwdCommand());
 		this.commands.put("LIST", new ListCommand());
 		this.commands.put("TYPE", new TypeCommand());
 		this.commands.put("CWD", new CwdCommand());
 		this.commands.put("MKD", new MkdCommand());
+		this.commands.put("XMKD", new MkdCommand());
+		this.commands.put("RNFR", new RnfrCommand());
+		this.commands.put("RNTO", new RntoCommand());
+		this.commands.put("RMD", new RmdCommand());
+		this.commands.put("XRMD", new RmdCommand());
 	}
 
 	public static CommandPool getInstance() {

@@ -1,5 +1,6 @@
 package utilitary;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,6 +19,8 @@ public class UserState {
 	
 	private Integer dataPort;
 	private Socket dataSocket;
+	
+	private File renameFile;
 	
 	public UserState(Socket socket) {
 		this.controlPort = socket.getPort();
@@ -90,5 +93,13 @@ public class UserState {
 		if(this.dataSocket == null)
 			return;
 			Connexion.write(dataSocket, message);
+	}
+
+	public void setRenameFile(File f) {
+		this.renameFile = f;
+	}
+	
+	public File getRenameFile() {
+		return renameFile;
 	}
 }

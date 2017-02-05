@@ -9,7 +9,7 @@ public abstract class LoggedCommand extends Command {
 		if(etat.isLogged()){
 			return executeLogged(data, etat);
 		}
-		return "403 - vous devez être connecté";
+		return "403 - vous devez etre connecte";
 	}
 	
 	public abstract String executeLogged(String data, UserState etat);
