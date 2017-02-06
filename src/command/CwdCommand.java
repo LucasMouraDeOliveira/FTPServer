@@ -1,5 +1,6 @@
 package command;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,24 +19,23 @@ public class CwdCommand extends LoggedCommand {
 			String newpath;
 			Path p  = Paths.get(etat.getRepository());
 			Path p2 = p.resolve(data);
-			if(p2.toFile().exists()){
+			File f = p2.toFile();
+			if(f.exists()){
 				try {
-					newpath = p2.toFile().getCanonicalPath();
+					newpath = f.getCanonicalPath().replace('\\', '/');
 				} catch (IOException e) {
 					e.printStackTrace();
 					return "500";
 				}
-				
-				if(newpath.startsWith(UserHandler.getRoot(etat.getUser()))){
-					etat.setRepository(newpath);
-				}else{
-					return "403";
+				if(!UserHandler.userHaveRight(etat.getUser(), f)){
+					return "403 - vous ne pouvez pas acceder a ce fichier";
 				}
+				etat.setRepository(newpath);
 			}else{
-				return "403";
+				return "403 - file don't exists";
 			}
 		}
-		return "200";
+		return "250 Successfully changed working directory";
 	}
 
 }

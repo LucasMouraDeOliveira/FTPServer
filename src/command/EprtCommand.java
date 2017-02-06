@@ -1,15 +1,22 @@
 package command;
 
+import java.net.UnknownHostException;
+
 import utilitary.UserState;
 
 public class EprtCommand extends LoggedCommand {
 
 	@Override
 	public String executeLogged(String data, UserState etat) {
-		data = data.substring(0, data.length()-1);
-		data = data.substring(data.lastIndexOf("|")+1, data.length());
-		etat.setDataPort(Integer.valueOf(data));
-		return "200 - Connexion sur le port " + data + " (pas) effectu�e";
+		String[] datas = data.split("\\|");
+		try {
+			etat.setDataAddress(datas[1], datas[2]);
+			etat.setDataPort(Integer.valueOf(datas[3]));
+			etat.setActive(true);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return "200 Port command successful";
 	}
 
 }

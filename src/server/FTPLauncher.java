@@ -8,7 +8,7 @@ import utilitary.Connexion;
 
 public class FTPLauncher {
 	
-	public final static int FTP_PORT_FILE = 2020;
+	public final static int FTP_PORT_FILE = 9999;
 	public final static int FTP_PORT_COMMAND = 10000;
 	
 	protected ServerSocket serverSocket;

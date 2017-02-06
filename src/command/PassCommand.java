@@ -9,11 +9,11 @@ public class PassCommand extends Command {
 	public String execute(String data, UserState etat) {
 		if(UserHandler.isPasswordCorrect(etat.getUser(), data)){
 			etat.setLogged(true);
-			System.out.println("Utilisateur " + etat.getUser() +" est connectï¿½");
+			System.out.println("Utilisateur " + etat.getUser() +" est connecté");
 			etat.setRepository(UserHandler.getRoot(etat.getUser()));
-			return "230 - Utilisateur connectï¿½";
+			return "230 - Utilisateur connecté";
 		}
-		return "430 - Mauvais mdp fdp";
+		return "430 - Mauvais mot de passe";
 	}
 
 }

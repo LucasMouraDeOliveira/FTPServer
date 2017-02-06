@@ -20,14 +20,13 @@ public class ThreadCommand extends Thread {
 	public void run() {
 		while(isSocketOpen()){
 			String message = receiveCommand();
-			System.out.println("Message reçu : " + message);
 			String[] data = message.split(" ", 2);
 			if(data.length == 0){
 				Connexion.write(socket, "400 - il manque pas un truc là ?");
 			}else if(data.length == 1){
-				Connexion.write(socket,""+(interpreteCommand(data[0], null)));
+				Connexion.write(socket,(interpreteCommand(data[0], null)));
 			} else {
-				Connexion.write(socket,""+(interpreteCommand(data[0], data[1])));
+				Connexion.write(socket,(interpreteCommand(data[0], data[1])));
 			}
 		}
 	}
