@@ -13,7 +13,7 @@ public class PassCommand extends Command {
 			etat.setRepository(UserHandler.getRoot(etat.getUser()));
 			return "230 - Utilisateur connecte";
 		}
-		return "430 - Mauvais mdp fdp";
+		return "430 - Mauvais mot de passe";
 	}
 
 }

@@ -19,7 +19,7 @@ public class MkdCommand extends LoggedCommand {
 		File f = p2.toFile();
 		if(f.exists()){
 			return "403 - le dossier exist deja";
-		}else if(UserHandler.userHaveRight(etat.getUser(), f)){
+		}else if(!UserHandler.userHaveRight(etat.getUser(), f)){
 			return "403 - vous ne pouvez supprimer ce fichier";
 		}
 		return f.mkdir() ? "200" : "400";

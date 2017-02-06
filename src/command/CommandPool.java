@@ -20,6 +20,9 @@ public class CommandPool {
 		this.commands.put("PASS", new PassCommand());
 		this.commands.put("OPTS", new OptsCommand());
 		this.commands.put("EPRT", new EprtCommand());
+		this.commands.put("PORT", new PortCommand());
+		this.commands.put("EPSV", new EpsvCommand());
+		this.commands.put("PASV", new PasvCommand());
 		this.commands.put("NLST", new NlstCommand());
 		this.commands.put("FEAT", new FeatCommand());
 		this.commands.put("PWD", new PwdCommand());
@@ -33,6 +36,7 @@ public class CommandPool {
 		this.commands.put("RNTO", new RntoCommand());
 		this.commands.put("RMD", new RmdCommand());
 		this.commands.put("XRMD", new RmdCommand());
+		this.commands.put("RETR", new RetrCommand());
 	}
 
 	public static CommandPool getInstance() {

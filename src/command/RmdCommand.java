@@ -19,7 +19,7 @@ public class RmdCommand extends LoggedCommand {
 		File f = p2.toFile();
 		if(!f.exists()){
 			return "400 - le fichier n'existe pas";
-		}else if(UserHandler.userHaveRight(etat.getUser(), f)){
+		}else if(!UserHandler.userHaveRight(etat.getUser(), f)){
 			return "403 - vous ne pouvez supprimer ce fichier";
 		}
 		if(f.isDirectory()){

@@ -9,11 +9,14 @@ import java.net.Socket;
 public class Connexion {
 	
 	public static void write(Socket socket, String message){
+		if(message == null)
+			return;
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(socket.getOutputStream());
 			writer.write(message+"\r\n");
 			writer.flush();
+			System.out.println("Message envoyé : " + message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
@@ -24,6 +27,7 @@ public class Connexion {
 		try {
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String message = reader.readLine();
+			System.out.println("Message reçu : " + message);
 			return message;
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -27,7 +27,7 @@ public class CwdCommand extends LoggedCommand {
 					e.printStackTrace();
 					return "500";
 				}
-				if(UserHandler.userHaveRight(etat.getUser(), f)){
+				if(!UserHandler.userHaveRight(etat.getUser(), f)){
 					return "403 - vous ne pouvez pas acceder a ce fichier";
 				}
 				etat.setRepository(newpath);
@@ -35,7 +35,7 @@ public class CwdCommand extends LoggedCommand {
 				return "403 - file don't exists";
 			}
 		}
-		return "200";
+		return "250 Successfully changed working directory";
 	}
 
 }

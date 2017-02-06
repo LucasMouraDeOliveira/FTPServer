@@ -3,10 +3,11 @@ package utilitary;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import server.FTPLauncher;
 
 public class UserState {
 	
@@ -18,14 +19,16 @@ public class UserState {
 	private Socket controlSocket;
 	
 	private Integer dataPort;
-	private Socket dataSocket;
+	private InetAddress dataAddress;
+	
+	private boolean active;
 	
 	private File renameFile;
 	
 	public UserState(Socket socket) {
 		this.controlPort = socket.getPort();
 		this.controlSocket = socket;
-		this.dataPort = FTPLauncher.FTP_PORT_FILE;
+		this.active = true;
 	}
 	
 	public String getRepository() {
@@ -60,6 +63,20 @@ public class UserState {
 		this.dataPort = dataPort;
 	}
 	
+	public InetAddress getDataAddress() {
+		return dataAddress;
+	}
+	
+	public void setDataAddress(String mode, String address) throws UnknownHostException{
+		if("1".equals(mode)){
+			dataAddress = Inet4Address.getByName(address);
+		}else if("2".equals(mode)){
+			dataAddress = Inet6Address.getByName(address);
+		}else{
+			//TODO erreur : mode inconnu (retourner 500)
+		}
+	}
+	
 	public Integer getControlPort() {
 		return controlPort;
 	}
@@ -67,39 +84,24 @@ public class UserState {
 	public Socket getControlSocket() {
 		return controlSocket;
 	}
-
-	public void connectUser() {
-		if(this.dataPort == null)
-			this.dataPort = this.controlPort-1;
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					ServerSocket socket = new ServerSocket(dataPort);
-					dataSocket = socket.accept();
-					System.out.println("socket connectee");
-					socket.close();
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		new Thread(r).start();
+	
+	public void transferCompleted() {
+		Connexion.write(controlSocket, "226 Transfer completed");
 	}
 	
-	public void writeString(String message){
-		if(this.dataSocket == null)
-			return;
-			Connexion.write(dataSocket, message);
+	public boolean isActive() {
+		return active;
 	}
-
+	
 	public void setRenameFile(File f) {
 		this.renameFile = f;
 	}
 	
 	public File getRenameFile() {
 		return renameFile;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

@@ -9,9 +9,7 @@ public class UserHandler {
 	
 	public static Map<String,String> users;
 	public static String root = "C:/Users/brico/Documents/GitHub/FTPServer/root/";
-	//return "/home/m1/bricout/Bureau/FTPServer/root/"+login;
 
-	
 	static {
 		users = new HashMap<String,String>();
 		users.put("lucas", "l");
@@ -33,9 +31,8 @@ public class UserHandler {
 	
 	public static boolean userHaveRight(String login, File f){
 		try {
-			return !f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login));
+			return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
