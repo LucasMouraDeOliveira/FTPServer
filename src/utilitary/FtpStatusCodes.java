@@ -12,6 +12,8 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_202_COMMANDE_NON_PRISE_EN_CHARGE = "202";
 	
+	public final static String CODE_211_FEATURES = "211";
+
 	public final static String CODE_220_SERVICE_PRET_POUR_UN_NOUVEL_UTILISATEUR = "220";
 	
 	public final static String CODE_221_DECONNEXION = "221";

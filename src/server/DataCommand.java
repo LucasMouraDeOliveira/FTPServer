@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 
 import command.DataCommandExecutor;
 import utilitary.Connexion;
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class DataCommand extends Thread{
@@ -64,7 +65,8 @@ public class DataCommand extends Thread{
 			this.openPassiveSocket();
 		}
 		//envoi code 125
-		Connexion.write(userState.getControlSocket(), "125 Sending data on data socket");
+		Connexion.write(userState.getControlSocket(), FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 
+				"Sending data on data socket"));
 	}
 	
 	public void closeSocket() {
