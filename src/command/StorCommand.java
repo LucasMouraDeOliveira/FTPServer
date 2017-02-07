@@ -1,11 +1,10 @@
 package command;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,7 +39,7 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
 	public void executeThread(String data, UserState userState, Socket socket) {
-		BufferedReader reader = null;
+		/*BufferedReader reader = null;
 		PrintWriter writer = null;
 		try {
 			String line = "";
@@ -58,7 +57,18 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}*/
+		DataInputStream reader = null;
+		DataOutputStream writer = null;
+		try {
+			reader = new DataInputStream(socket.getInputStream());
+			writer = new DataOutputStream(new FileOutputStream(file));
+			byte[] bytes = Connexion.readBinary(reader);
+			writer.write(bytes);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
