@@ -37,6 +37,7 @@ public class CommandPool {
 		this.commands.put("RMD", new RmdCommand());
 		this.commands.put("XRMD", new RmdCommand());
 		this.commands.put("RETR", new RetrCommand());
+		this.commands.put("MLST", new MlstCommand());
 	}
 
 	public static CommandPool getInstance() {
