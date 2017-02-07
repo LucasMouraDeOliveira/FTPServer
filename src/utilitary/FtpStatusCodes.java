@@ -30,6 +30,8 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_502_COMMANDE_NON_IMPLEMENTEE = "502";
 	
+	public final static String CODE_503_MAUVAIS_ORDRE_DE_COMMANDES = "503";
+	
 	public final static String CODE_530_PAS_CONNECTE = "530";
 	
 	public final static String CODE_550_ACTION_NON_REALISEE = "550";
