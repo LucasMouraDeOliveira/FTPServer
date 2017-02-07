@@ -63,11 +63,11 @@ public class DataCommand extends Thread{
 		}else{
 			this.openPassiveSocket();
 		}
-		Connexion.write(userState.getControlSocket(), dataCommandExecutor.getStartCode());
+		Connexion.write(userState.getWriter(), dataCommandExecutor.getStartCode().toString());
 	}
 	
 	public void closeSocket() {
-		Connexion.write(userState.getControlSocket(), dataCommandExecutor.getEndCode());
+		Connexion.write(userState.getWriter(), dataCommandExecutor.getEndCode().toString());
 		if(this.serverSocket != null){
 			try {
 				this.serverSocket.close();

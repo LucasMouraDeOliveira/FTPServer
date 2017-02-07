@@ -1,8 +1,10 @@
 package utilitary;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -18,6 +20,10 @@ public class UserState {
 	private Integer controlPort;
 	private Socket controlSocket;
 	
+	//IO Control socket
+	private BufferedReader reader;
+	private PrintWriter writer;
+	
 	private Integer dataPort;
 	private InetAddress dataAddress;
 	
@@ -29,6 +35,12 @@ public class UserState {
 		this.controlPort = socket.getPort();
 		this.controlSocket = socket;
 		this.active = true;
+		try {
+			this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			this.writer = new PrintWriter(socket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getRepository() {
@@ -85,10 +97,6 @@ public class UserState {
 		return controlSocket;
 	}
 	
-	public void transferCompleted() {
-		Connexion.write(controlSocket, "226 Transfer completed");
-	}
-	
 	public boolean isActive() {
 		return active;
 	}
@@ -103,5 +111,13 @@ public class UserState {
 	
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public PrintWriter getWriter() {
+		return writer;
+	}
+	
+	public BufferedReader getReader() {
+		return reader;
 	}
 }

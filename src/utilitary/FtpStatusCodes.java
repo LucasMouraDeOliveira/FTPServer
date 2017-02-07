@@ -2,6 +2,9 @@ package utilitary;
 
 import java.text.Normalizer;
 
+import server.FtpLongReply;
+import server.FtpReply;
+
 public class FtpStatusCodes {
 	
 	public final static String CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE = "125";
@@ -32,6 +35,8 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_331_USER_OK_NEED_PASSWORD = "331";
 	
+	public final static String CODE_350_EN_ATTENTE_D_INFORMATION_SUPPLEMENTAIRE = "350";
+	
 	public final static String CODE_404_NOT_FOUND = "404";
 	
 	public final static String CODE_500_ERREUR_INTERNE = "500";
@@ -46,15 +51,25 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_550_ACTION_NON_REALISEE = "550";
 	
-	public static String buildReply(String FTPStatusCode, String message){
+	public static FtpReply buildReply(String FTPStatusCode, String message){
 		return buildReply(FTPStatusCode, message, true);
 	}
 	
-	public static String buildReply(String FTPStatusCode, String message, boolean removeAccents){
+	public static FtpReply buildReply(String FTPStatusCode, String message, boolean removeAccents){
 		if(removeAccents){
 			message = stripAccents(message);
 		}
-		return FTPStatusCode + " " + message;
+		FtpReply reply = new FtpReply();
+		reply.setCode(FTPStatusCode);
+		reply.setMessage(message);
+		return reply;
+	}
+	
+	public static FtpLongReply buildLongReply(String FTPStatusCode, String message){
+		FtpLongReply longReply = new FtpLongReply();
+		longReply.setCode(FTPStatusCode);
+		longReply.setMessage(stripAccents(message));
+		return longReply;
 	}
 	
 	public static String stripAccents(String s) {

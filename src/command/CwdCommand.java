@@ -5,20 +5,25 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * 
+ * @author Eliott Bricout
+ *
+ */
 public class CwdCommand extends LoggedCommand {
 
 	@Override
-	public String executeLogged(String data, UserState etat) {
-		// data = null  go -> root
+	public FtpReply executeLogged(String data, UserState userState) {
 		if(data == null){
-			etat.setRepository(UserHandler.getRoot(etat.getUser()));
+			userState.setRepository(UserHandler.getRoot(userState.getUser()));
 		}else{
 			String newpath;
-			Path p  = Paths.get(etat.getRepository());
+			Path p  = Paths.get(userState.getRepository());
 			Path p2 = p.resolve(data);
 			File f = p2.toFile();
 			if(f.exists()){
@@ -29,11 +34,11 @@ public class CwdCommand extends LoggedCommand {
 					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
 							"Erreur lors de la résolution du chemin de fichier");
 				}
-				if(!UserHandler.userHaveRight(etat.getUser(), f)){
+				if(!UserHandler.userHaveRight(userState.getUser(), f)){
 					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 							"Vous n'avez pas les droits requis pour vous déplacer dans ce dossier");
 				}
-				etat.setRepository(newpath);
+				userState.setRepository(newpath);
 			}else{
 				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 						"Le dossier n'existe pas");

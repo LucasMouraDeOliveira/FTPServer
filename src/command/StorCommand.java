@@ -2,8 +2,9 @@ package command;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Path;
@@ -16,7 +17,7 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
-public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
+public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 	
 	protected File file;
 
@@ -25,46 +26,45 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 		Path p  = Paths.get(userState.getRepository());
 		Path p2 = p.resolve(data);
 		file = p2.toFile();
-		if(!file.exists()){
+		if(file.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
-					"Le fichier n'existe pas");
+					"Le fichier existe déjà");
 		} 
 		if(!UserHandler.userHaveRight(userState.getUser(), file)){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Le fichier n'est pas accessible");
+					"Vous n'avez pas les droits pour uploader ce fichier ici");
 		}
-				
 		new DataCommand(data, userState, this).start();
 		return new FtpReply();
 	}
 
 	@Override
-	public void executeThread(String data, UserState userState, Socket dataSocket) {
+	public void executeThread(String data, UserState userState, Socket socket) {
 		BufferedReader reader = null;
 		PrintWriter writer = null;
 		try {
-			reader = new BufferedReader(new FileReader(file));
-			writer = new PrintWriter(dataSocket.getOutputStream());
 			String line = "";
-			while((line = reader.readLine()) != null){
-				Connexion.write(writer, line);
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			writer = new PrintWriter(new FileWriter(file));
+			while((line = Connexion.read(reader)) != null){
+				writer.write(line+"\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
-			writer.close();
+		} finally {
 			try {
+				writer.close();
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	@Override
 	public FtpReply getStartCode() {
-		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 
-				"Connexion établie");
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_150_STATUS_FICHIER_OK_OUVERTURE_EN_COURS, 
+				"Ouverture du flux de données");
 	}
 
 	@Override

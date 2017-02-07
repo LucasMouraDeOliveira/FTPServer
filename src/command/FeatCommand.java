@@ -1,16 +1,18 @@
 package command;
 
+import server.FtpLongReply;
+import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class FeatCommand extends LoggedCommand{
 
 	@Override
-	public String executeLogged(String data, UserState etat) {
-		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_211_FEATURES,"Features")+ "\n"
-				+ "MLST type*;size*;modify*;\n" 
-				+ FtpStatusCodes.buildReply(FtpStatusCodes.CODE_211_FEATURES,"End");
-		
+	public FtpReply executeLogged(String data, UserState userState) {
+		FtpLongReply reply = FtpStatusCodes.buildLongReply(FtpStatusCodes.CODE_211_FEATURES,"Features");
+		reply.addLine("MLST type*;size*;modify*;");
+		reply.addLine(FtpStatusCodes.buildReply(FtpStatusCodes.CODE_211_FEATURES,"End").toString());
+		return reply;
 	}
 
 

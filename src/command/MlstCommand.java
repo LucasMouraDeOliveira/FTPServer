@@ -1,9 +1,12 @@
 package command;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import server.DataCommand;
+import server.FtpReply;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
@@ -11,8 +14,8 @@ import utilitary.UserState;
 public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
-	public String executeLogged(String data, UserState etat) {
-		new DataCommand(data, etat, this).start();
+	public FtpReply executeLogged(String data, UserState userState) {
+		new DataCommand(data, userState, this).start();
 		return null;
 	}
 
@@ -24,7 +27,13 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 		for(File file : files){
 			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
 		}
-		Connexion.write(dataSocket, retour);
+		try {
+			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
+			Connexion.write(writer, retour);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String getType(File file) {
@@ -35,13 +44,13 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 	}
 	
 	@Override
-	public String getStartCode() {
+	public FtpReply getStartCode() {
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 
 				"Connexion établie");
 	}
 
 	@Override
-	public String getEndCode() {
+	public FtpReply getEndCode() {
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_226_FERMETURE_CONNEXION_DONNEES,
 				"Fermeture de la connexion");
 	}

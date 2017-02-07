@@ -48,8 +48,6 @@ public class FTPLauncher {
 			try {
 				System.out.println("En attente de connexion");
 				socket = serverSocket.accept();
-				Connexion.write(socket, "220 - bienvenue sur le serveur FTP");
-				System.out.println("Utilisateur connecté sur le port :" + socket.getPort());
 				new ThreadCommand(socket).start();
 			} catch (IOException e) {
 				e.printStackTrace();

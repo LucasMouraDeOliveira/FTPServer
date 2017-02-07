@@ -1,29 +1,39 @@
 package command;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import server.FtpReply;
+import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
 public class RntoCommand extends LoggedCommand {
 
 	@Override
-	public String executeLogged(String data, UserState etat) {
+	public FtpReply executeLogged(String data, UserState userState) {
 		if(data == null){
-			return "400 - pas de nom de fichier";
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_501_ERREUR_DE_SYNTAXE, 
+					"Le nom de fichier est manquant");
 		}
-		File from = etat.getRenameFile();
-		Path p  = Paths.get(etat.getRepository());
+		File from = userState.getRenameFile();
+		Path p  = Paths.get(userState.getRepository());
 		Path p2 = p.resolve(data);
 		File to = p2.toFile();
 		if(to.exists()){
-			return "400 - ce fichier exist deja";
-		}else if(!UserHandler.userHaveRight(etat.getUser(), to)){
-			return "403 - vous ne pouvez pas aller au dela de votre dossier";
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+					"Le fichier existe déjà");
+		}else if(!UserHandler.userHaveRight(userState.getUser(), to)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+					"Le fichier n'est pas accessible");
 		}
-		return from.renameTo(to) ? "200 - successful" : "400 - il y a eu un problème";
+		if(from.renameTo(to)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 
+					"Le fichier a bien été renommé");
+		} else {
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+					"Le fichier n'a pas été renommé");
+		}
 	}
 }

@@ -1,20 +1,21 @@
 package command;
 
-import utilitary.UserState;
+import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
+import utilitary.UserState;
 
-public class PassCommand extends Command {
+public class PassCommand implements Command {
 
 	@Override
-	public String execute(String data, UserState etat) {
-		if(etat.getUser() == null){
+	public FtpReply execute(String data, UserState userState) {
+		if(userState.getUser() == null){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_503_MAUVAIS_ORDRE_DE_COMMANDES, 
 					"Commande USER à envoyer avant");
 		}
-		if(UserHandler.isPasswordCorrect(etat.getUser(), data)){
-			etat.setLogged(true);
-			etat.setRepository(UserHandler.getRoot(etat.getUser()));
+		if(UserHandler.isPasswordCorrect(userState.getUser(), data)){
+			userState.setLogged(true);
+			userState.setRepository(UserHandler.getRoot(userState.getUser()));
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_230_UTILISATEUR_CONNECTE, 
 					"Utilisateur connecté");
 		}

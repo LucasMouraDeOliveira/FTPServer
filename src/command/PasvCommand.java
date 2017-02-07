@@ -4,18 +4,19 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 
 import server.FTPLauncher;
+import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class PasvCommand extends LoggedCommand {
 
 	@Override
-	public String executeLogged(String data, UserState etat) {
+	public FtpReply executeLogged(String data, UserState userState) {
 		Integer dataPort = FTPLauncher.FTP_PORT_FILE;
 		Integer p1 = dataPort/256;
 		Integer p2 = dataPort%256;
 		
-		InetAddress address = etat.getDataAddress();
+		InetAddress address = userState.getDataAddress();
 		String addressToString = "";
 		if(address instanceof Inet6Address){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 

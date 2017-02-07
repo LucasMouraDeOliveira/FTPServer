@@ -2,8 +2,16 @@ package command;
 
 import java.util.HashMap;
 
+import server.FtpReply;
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation du pattern Command qui permet de stocker la liste des commandes FTP reconnues par l'application.
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class CommandPool {
 	
 	protected HashMap<String, Command> commands;
@@ -15,6 +23,9 @@ public class CommandPool {
 		this.initCommands();
 	}
 	
+	/**
+	 * Initialise la liste des commandes reconnues en associant un code (exemple : USER) à une implémentation de la commande
+	 */
 	private void initCommands() {
 		this.commands.put("USER", new UserCommand());
 		this.commands.put("PASS", new PassCommand());
@@ -38,18 +49,33 @@ public class CommandPool {
 		this.commands.put("XRMD", new RmdCommand());
 		this.commands.put("RETR", new RetrCommand());
 		this.commands.put("MLST", new MlstCommand());
+		this.commands.put("STOR", new StorCommand());
 	}
-
+	
+	/**
+	 * Retourne l'instance unique de la Pool de commandes
+	 * @return
+	 */
 	public static CommandPool getInstance() {
 		return instance;
 	}
 	
-	public String handle(String command, String data, UserState etat){
+	/**
+	 * Execute une commande et renvoie un code de retour
+	 * 
+	 * @param command le code de la commande reçue
+	 * @param data les paramètres de la commande
+	 * @param userState l'état de l'utilisateur, qui contient les informations relatives à sa session
+	 * 
+	 * @return un code qui correspond au code de retour de la commande, 404 si la commande n'est pas reconnue par l'application
+	 */
+	public FtpReply handle(String command, String data, UserState userState){
 		Command c = commands.get(command);
 		if(c != null){
-			return c.execute(data, etat);
+			return c.execute(data, userState);
 		}
-		return "404 - Commande inconnue dans la pool";
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_404_NOT_FOUND, 
+				"Commande inconnue");
 	}
 
 }

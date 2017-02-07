@@ -2,14 +2,15 @@ package command;
 
 import java.net.Socket;
 
+import server.FtpReply;
 import utilitary.UserState;
 
 public interface DataCommandExecutor {
 	
 	public void executeThread(String data, UserState userState, Socket socket);
 	
-	public String getStartCode();
+	public FtpReply getStartCode();
 	
-	public String getEndCode();
+	public FtpReply getEndCode();
 	
 }

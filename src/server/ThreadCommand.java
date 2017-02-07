@@ -18,24 +18,30 @@ public class ThreadCommand extends Thread {
 	
 	@Override
 	public void run() {
+		Connexion.write(state.getWriter(), "220 - bienvenue sur le serveur FTP");
 		while(isSocketOpen()){
 			String message = receiveCommand();
+			if(message == null){
+				break;
+			}
 			String[] data = message.split(" ", 2);
-			if(data.length == 0){
-				Connexion.write(socket, "400 - il manque pas un truc là ?");
-			}else if(data.length == 1){
-				Connexion.write(socket,(interpreteCommand(data[0], null)));
+			FtpReply reply;
+			if(data.length == 1){
+				reply = interpreteCommand(data[0], null);
 			} else {
-				Connexion.write(socket,(interpreteCommand(data[0], data[1])));
+				reply = interpreteCommand(data[0], data[1]);
+			}
+			if(!reply.isEmpty()){
+				Connexion.write(state.getWriter(), reply.toString());
 			}
 		}
 	}
 	
 	public String receiveCommand(){
-		return Connexion.read(socket);
+		return Connexion.read(state.getReader());
 	}
 	
-	public String interpreteCommand(String command, String data){
+	public FtpReply interpreteCommand(String command, String data){
 		return CommandPool.getInstance().handle(command, data, this.state);
 	}
 	
