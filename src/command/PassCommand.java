@@ -8,6 +8,11 @@ public class PassCommand extends Command {
 
 	@Override
 	public String execute(String data, UserState etat) {
+		if(etat.getUser() == null){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_503_MAUVAIS_ORDRE_DE_COMMANDES, 
+					"Commande USER à envoyer avant");
+		}
+		
 		if(UserHandler.isPasswordCorrect(etat.getUser(), data)){
 			etat.setLogged(true);
 			etat.setRepository(UserHandler.getRoot(etat.getUser()));
