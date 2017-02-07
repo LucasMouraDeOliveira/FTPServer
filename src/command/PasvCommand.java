@@ -4,6 +4,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 
 import server.FTPLauncher;
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class PasvCommand extends LoggedCommand {
@@ -17,11 +18,13 @@ public class PasvCommand extends LoggedCommand {
 		InetAddress address = etat.getDataAddress();
 		String addressToString = "";
 		if(address instanceof Inet6Address){
-			return "500 Address is IPv6, you should use EPSV command instead";
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
+					"Address is IPv6, you should use EPSV command instead");
 		}else{
 			addressToString = address.getHostAddress().replaceAll("\\.", ",");
 		}
-		return "227 ="+addressToString+","+p1+","+p2;
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_227_MODE_PASSIF_ACTIVE, 
+				"="+addressToString+","+p1+","+p2);
 	}
 
 }

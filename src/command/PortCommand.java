@@ -2,6 +2,7 @@ package command;
 
 import java.net.UnknownHostException;
 
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class PortCommand extends LoggedCommand {
@@ -16,7 +17,9 @@ public class PortCommand extends LoggedCommand {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		return "200 Connected to specified port";
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 
+				"Connecté sur le port spécifié");
+				
 	}
 
 }

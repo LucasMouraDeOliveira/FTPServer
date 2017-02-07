@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 
 import server.DataCommand;
 import utilitary.Connexion;
+import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
@@ -47,6 +48,18 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 		}else{
 			//TODO envoyer message erreur
 		}
+	}
+	
+	@Override
+	public String getStartCode() {
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 
+				"Connexion établie");
+	}
+
+	@Override
+	public String getEndCode() {
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_226_FERMETURE_CONNEXION_DONNEES,
+				"Fermeture de la connexion");
 	}
 
 }

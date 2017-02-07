@@ -18,11 +18,19 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_221_DECONNEXION = "221";
 	
+	public final static String CODE_226_FERMETURE_CONNEXION_DONNEES = "226";
+	
+	public final static String CODE_227_MODE_PASSIF_ACTIVE = "227";
+	
 	public final static String CODE_229_MODE_PASSIF_ETENDU_ACTIVE = "229";
 	
 	public final static String CODE_230_UTILISATEUR_CONNECTE = "230";
 	
 	public final static String CODE_250_ACTION_SUR_LE_FICHIER_REALISEE_AVEC_SUCCES = "250";
+	
+	public final static String CODE_257_CHEMIN_D_ACCES_RETOURNE = "257";
+	
+	public final static String CODE_331_USER_OK_NEED_PASSWORD = "331";
 	
 	public final static String CODE_404_NOT_FOUND = "404";
 	

@@ -5,6 +5,7 @@ import java.net.Socket;
 
 import server.DataCommand;
 import utilitary.Connexion;
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class NlstCommand extends LoggedCommand implements DataCommandExecutor {
@@ -27,6 +28,18 @@ public class NlstCommand extends LoggedCommand implements DataCommandExecutor {
 			}
 		}
 		Connexion.write(dataSocket, retour);
+	}
+	
+	@Override
+	public String getStartCode() {
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 
+				"Connexion établie");
+	}
+
+	@Override
+	public String getEndCode() {
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_226_FERMETURE_CONNEXION_DONNEES,
+				"Fermeture de la connexion");
 	}
 	 
 

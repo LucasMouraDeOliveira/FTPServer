@@ -1,18 +1,15 @@
 package command;
 
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
-import utilitary.UserHandler;
 
 public class UserCommand extends Command {
 
 	@Override
 	public String execute(String data, UserState etat) {
-		if(UserHandler.userExists(data)){
-			etat.setUser(data);
-			System.out.println("Utilisateur " + etat.getUser() + " tente de se connecter");
-			return "331 - Vas y continue tu m'interesses";
-		}
-		return "430 - Je te connais pas mec ...";
+		etat.setUser(data);
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_331_USER_OK_NEED_PASSWORD, 
+				"Mot de passe attendu");
 	}
 
 }

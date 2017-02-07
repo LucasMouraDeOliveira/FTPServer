@@ -8,4 +8,8 @@ public interface DataCommandExecutor {
 	
 	public void executeThread(String data, UserState userState, Socket socket);
 	
+	public String getStartCode();
+	
+	public String getEndCode();
+	
 }
