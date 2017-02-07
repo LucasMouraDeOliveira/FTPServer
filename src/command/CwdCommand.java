@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
@@ -25,17 +26,21 @@ public class CwdCommand extends LoggedCommand {
 					newpath = f.getCanonicalPath().replace('\\', '/');
 				} catch (IOException e) {
 					e.printStackTrace();
-					return "500";
+					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
+							"Erreur lors de la résolution du chemin de fichier");
 				}
 				if(!UserHandler.userHaveRight(etat.getUser(), f)){
-					return "403 - vous ne pouvez pas acceder a ce fichier";
+					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+							"Vous n'avez pas les droits requis pour vous déplacer dans ce dossier");
 				}
 				etat.setRepository(newpath);
 			}else{
-				return "403 - file don't exists";
+				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+						"Le dossier n'existe pas");
 			}
 		}
-		return "250 Successfully changed working directory";
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_250_ACTION_SUR_LE_FICHIER_REALISEE_AVEC_SUCCES, 
+				"Dossier mis à jour avec succès");
 	}
 
 }

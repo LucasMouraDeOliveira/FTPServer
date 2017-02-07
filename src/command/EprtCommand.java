@@ -2,6 +2,7 @@ package command;
 
 import java.net.UnknownHostException;
 
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class EprtCommand extends LoggedCommand {
@@ -15,8 +16,11 @@ public class EprtCommand extends LoggedCommand {
 			etat.setActive(true);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
+					"Erreur lors de la résolution de l'adresse hôte");
 		}
-		return "200 Port command successful";
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 
+				"Port mis à jour avec succès");
 	}
 
 }

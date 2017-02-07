@@ -1,6 +1,7 @@
 package command;
 
 import utilitary.UserState;
+import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 
 public class PassCommand extends Command {
@@ -9,9 +10,9 @@ public class PassCommand extends Command {
 	public String execute(String data, UserState etat) {
 		if(UserHandler.isPasswordCorrect(etat.getUser(), data)){
 			etat.setLogged(true);
-			System.out.println("Utilisateur " + etat.getUser() +" est connecte");
 			etat.setRepository(UserHandler.getRoot(etat.getUser()));
-			return "230 - Utilisateur connecte";
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_230_UTILISATEUR_CONNECTE, 
+					"Utilisateur connecté");
 		}
 		return "430 - Mauvais mot de passe";
 	}

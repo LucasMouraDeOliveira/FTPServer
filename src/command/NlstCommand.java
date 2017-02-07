@@ -21,8 +21,10 @@ public class NlstCommand extends LoggedCommand implements DataCommandExecutor {
 		File folder = new File(userState.getRepository());
 		File[] files = folder.listFiles();
 		String retour = "";
-		for(File file : files){
-			retour+=file.getName()+"\n";
+		if(files != null){
+			for(File file : files){
+				retour+=file.getName()+"\n";
+			}
 		}
 		Connexion.write(dataSocket, retour);
 	}

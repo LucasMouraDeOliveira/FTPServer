@@ -1,6 +1,7 @@
 package command;
 
 import server.FTPLauncher;
+import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 public class EpsvCommand extends LoggedCommand {
@@ -10,7 +11,8 @@ public class EpsvCommand extends LoggedCommand {
 		String port = ""+FTPLauncher.FTP_PORT_FILE;
 		etat.setDataPort(Integer.valueOf(port));
 		etat.setActive(false);
-		return "229 Entering Extended Passive Mode (|||"+etat.getDataPort()+"|)";
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_229_MODE_PASSIF_ETENDU_ACTIVE, 
+				"Passage en mode passif étendu (|||"+etat.getDataPort()+"|)");
 	}
 
 }
