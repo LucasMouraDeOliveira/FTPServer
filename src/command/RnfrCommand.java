@@ -9,6 +9,15 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande RNFR
+ * Renomme un fichier dans le dossier courant de l'utilisateur sur le serveur. 
+ * La commande RNFR définit le nom du fichier source, et est complétée par la commande
+ * RNTO qui définit le nouveau nom du fichier
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class RnfrCommand extends LoggedCommand {
 
 	@Override

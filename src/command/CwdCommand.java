@@ -11,8 +11,10 @@ import utilitary.UserHandler;
 import utilitary.UserState;
 
 /**
+ * Implémentation de la commande CWD et de son alias XCWD.
+ * Met à jour le dossier courant de l'utilisateur. 
  * 
- * @author Eliott Bricout
+ * @author Lucas Moura de Oliveira
  *
  */
 public class CwdCommand extends LoggedCommand {

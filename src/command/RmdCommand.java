@@ -9,6 +9,13 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande RMD
+ * Supprime un dossier et tout son contenu du serveur
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class RmdCommand extends LoggedCommand {
 
 	@Override
@@ -45,7 +52,7 @@ public class RmdCommand extends LoggedCommand {
 					"Le fichier n'a pas été supprimé");
 		}
 	}
-
+	
 	private boolean recursifdelete(File parent) {
 		for(File f : parent.listFiles()){
 			if(f.isDirectory()){

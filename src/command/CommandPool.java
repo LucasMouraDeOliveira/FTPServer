@@ -18,6 +18,9 @@ public class CommandPool {
 	
 	public static final CommandPool instance = new CommandPool();
 	
+	/**
+	 * Initialise la commandPool
+	 */
 	private CommandPool() {
 		this.commands = new HashMap<String, Command>();
 		this.initCommands();

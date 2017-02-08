@@ -11,6 +11,13 @@ import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande MLST
+ * Je ne sais pas ce qu'elle fait ...
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
@@ -36,6 +43,14 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 		}
 	}
 
+	/**
+	 * Retourne le type d'un fichier.
+	 * Si le fichier est un dossier, retourne dir, sinon retourne l'extension du fichier
+	 * 
+	 * @param file le fichier
+	 * 
+	 * @return le type du fichier
+	 */
 	private String getType(File file) {
 		if(file.isDirectory()){
 			return "dir";

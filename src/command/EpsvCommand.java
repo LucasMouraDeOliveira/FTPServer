@@ -5,6 +5,14 @@ import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande EPSV
+ * Passe la connexion en mode passif étendu : le serveur choisit un port de connexion pour la socket de données
+ * et informe le client du numéro de port sur lequel se connecter.
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class EpsvCommand extends LoggedCommand {
 
 	@Override

@@ -11,6 +11,13 @@ import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande LIST
+ * Renvoie le contenu du dossier courant de l'utilisateur
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class ListCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override

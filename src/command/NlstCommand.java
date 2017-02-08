@@ -11,6 +11,13 @@ import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande NLST
+ * Retourne le contenu du dossier courant de l'utilisateur (identique à LIST pour l'instant)
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class NlstCommand extends LoggedCommand implements DataCommandExecutor {
 
 	@Override

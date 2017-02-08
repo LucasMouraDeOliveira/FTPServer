@@ -5,6 +5,14 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande PASS
+ * Vérifie la validité du mot de passe envoyé par un utilisateur.
+ * La commande PASS est normalement envoyée après USER et permet à l'utilisateur de s'authentifier
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class PassCommand implements Command {
 
 	@Override

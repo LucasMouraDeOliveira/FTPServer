@@ -16,6 +16,14 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande STOR
+ * Upload un fichier dans le dossier courant de l'utilisateur sur le serveur
+ * Le fichier est uploadé sous la forme d'un flux binaire via la data socket
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 	
 	protected File file;

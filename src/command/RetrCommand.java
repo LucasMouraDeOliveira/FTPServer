@@ -15,6 +15,13 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande RETR
+ * Télécharge un fichier depuis le serveur en envoyant un flux de byte par la data socket
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 	
 	protected Path path;

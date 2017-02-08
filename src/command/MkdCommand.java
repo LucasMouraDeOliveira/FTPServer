@@ -9,6 +9,13 @@ import utilitary.FtpStatusCodes;
 import utilitary.UserHandler;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande MKD et de son alias XMKD
+ * Crée un dossier dans le dossier courant de l'utilisateur
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class MkdCommand extends LoggedCommand {
 
 	@Override

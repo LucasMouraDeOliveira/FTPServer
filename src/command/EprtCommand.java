@@ -6,6 +6,13 @@ import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande EPRT.
+ * Met à jour l'adresse et le port de connexion de la socket de données.
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class EprtCommand extends LoggedCommand {
 
 	@Override

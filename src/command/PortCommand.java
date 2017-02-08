@@ -6,6 +6,16 @@ import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande PORT
+ * Permet à l'utilisateur de demander au serveur de se connecter sur le port et l'adresse passés en paramètre 
+ * pour l'envoi de données via la data socket.
+ * Le format de la commande est : PORT h1,h2,h3,h4,p1,p2 avec h1..4 l'adresse au format IPv4 et p1,p2 le port tel que
+ * p1*256+p2 = le numéro du port
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class PortCommand extends LoggedCommand {
 
 	@Override

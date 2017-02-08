@@ -4,6 +4,13 @@ import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande PWD et de son alias XPWD
+ * Retourne le dossier courant de l'utilisateur sur le serveur
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class PwdCommand extends LoggedCommand {
 
 	@Override

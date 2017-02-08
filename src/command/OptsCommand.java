@@ -4,6 +4,13 @@ import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
+/**
+ * Implémentation de la commande OPTS
+ * La commande n'est pas prise en charge et retourne le code 202
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
 public class OptsCommand implements Command {
 
 	@Override
