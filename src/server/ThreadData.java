@@ -10,7 +10,16 @@ import command.DataCommandExecutor;
 import utilitary.Connexion;
 import utilitary.UserState;
 
-public class DataCommand extends Thread{
+/**
+ * Gère les échanges de messages entre le serveur et un client sur la socket de données.
+ * Contrairement à la socket de commande, la socket de données est ouverte temporairement,
+ * après la récéption d'une commande du client nécessitant de transmettre un flux de données (envoi de fichier par exemple).
+ * La socket est fermée après l'envoi des données.
+ * 
+ * @author Lucas Moura de Oliveira
+ *
+ */
+public class ThreadData extends Thread{
 	
 	protected String data;
 	
@@ -22,7 +31,14 @@ public class DataCommand extends Thread{
 
 	private DataCommandExecutor dataCommandExecutor;
 	
-	public DataCommand(String data, UserState userState, DataCommandExecutor dataCommandExecutor){
+	/**
+	 * Initialise le thread
+	 * 
+	 * @param data les paramètres de la commande
+	 * @param userState les informations de la session utilisateur
+	 * @param dataCommandExecutor la commande 
+	 */
+	public ThreadData(String data, UserState userState, DataCommandExecutor dataCommandExecutor){
 		this.data = data;
 		this.userState = userState;
 		this.dataCommandExecutor  = dataCommandExecutor;
@@ -37,6 +53,9 @@ public class DataCommand extends Thread{
 		this.closeSocket();
 	}
 	
+	/**
+	 * Ouvre la socket de données en mode actif : le serveur se connecte à un port spécifié par l'utilisateur
+	 */
 	public void openActiveSocket(){
 		this.dataSocket = new Socket();
 		try {
@@ -48,6 +67,9 @@ public class DataCommand extends Thread{
 		}
 	}
 	
+	/**
+	 * Ouvre la socket de données en mode passif : le serveur attend la connexion du client sur le port choisi par le serveur
+	 */
 	public void openPassiveSocket() {
 		try {
 			this.serverSocket = new ServerSocket(userState.getDataPort());
@@ -57,6 +79,10 @@ public class DataCommand extends Thread{
 		}
 	}
 	
+	/**
+	 * Démarre la connexion (soit en mode passif soit en mode actif en fonction de ce qui a été choisi par le client)
+	 * et envoi un message à l'utilisateur attestant que la connexion est active.
+	 */
 	public void connectSocket(){
 		if(userState.isActive()){
 			this.openActiveSocket();
@@ -66,6 +92,9 @@ public class DataCommand extends Thread{
 		Connexion.write(userState.getWriter(), dataCommandExecutor.getStartCode().toString());
 	}
 	
+	/**
+	 * Envoi un message à l'utilisateur l'informant que le traitement s'est bien déroulé et ferme la socket de données
+	 */
 	public void closeSocket() {
 		Connexion.write(userState.getWriter(), dataCommandExecutor.getEndCode().toString());
 		if(this.serverSocket != null){

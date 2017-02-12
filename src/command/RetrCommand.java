@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import server.DataCommand;
+import server.ThreadData;
 import server.FtpReply;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
@@ -40,7 +40,7 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 					"Le fichier n'est pas accessible");
 		}
 				
-		new DataCommand(data, userState, this).start();
+		new ThreadData(data, userState, this).start();
 		return new FtpReply();
 	}
 	

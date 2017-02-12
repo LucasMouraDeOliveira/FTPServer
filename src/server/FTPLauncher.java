@@ -7,16 +7,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
 
-import utilitary.Connexion;
 import utilitary.UserHandler;
 
 public class FTPLauncher {
 	
+	//Port par défaut pour la socket de données
 	public static int FTP_PORT_FILE = 2020;
+	
+	//Port par défaut pour la socket de commande
 	public static int FTP_PORT_COMMAND = 2021;
 	
 	protected ServerSocket serverSocket;
 	
+	/**
+	 * Démarre le meilleur serveur FTP du monde
+	 */
 	public FTPLauncher() {
 		ReadParam();
 		try {
@@ -27,6 +32,9 @@ public class FTPLauncher {
 		}
 	}
 	
+	/**
+	 * Lit le fichier de configuration du serveur
+	 */
 	private void ReadParam(){
 		Properties prop = new Properties();
 		try {
@@ -42,6 +50,9 @@ public class FTPLauncher {
 		System.out.println("fichier parametre charge");
 	}
 
+	/**
+	 * Démarre l'écoute de connexion sur le port de commandes
+	 */
 	public void startServer() {
 		Socket socket;
 		while(true){

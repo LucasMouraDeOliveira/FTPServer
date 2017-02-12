@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import server.DataCommand;
+import server.ThreadData;
 import server.FtpReply;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
@@ -41,7 +41,7 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
 					"Vous n'avez pas les droits pour uploader ce fichier ici");
 		}
-		new DataCommand(data, userState, this).start();
+		new ThreadData(data, userState, this).start();
 		return new FtpReply();
 	}
 

@@ -6,8 +6,20 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Classe utilitaire gérant l'envoi et la réception de messages par sockets
+ * 
+ * @author Lucas Moura de Oliveira
+ */
 public class Connexion {
 	
+	/**
+	 * Envoie un message au format texte à une socket client.
+	 * Si le message est null, rien ne se passe
+	 * 
+	 * @param writer le writer de la socket
+	 * @param message le message
+	 */
 	public static void write(PrintWriter writer, String message){
 		if(message == null)
 			return;
@@ -16,6 +28,13 @@ public class Connexion {
 		System.out.println("Message envoyé : " + message);
 	}
 	
+	/**
+	 * Reçoit un message au format texte depuis une socket client
+	 * 
+	 * @param reader le reader de la socket
+	 * 
+	 * @return le message reçu par la socket, null s'il y a eu une erreur lors de la transmission
+	 */
 	public static String read(BufferedReader reader){
 		try {
 			String message = reader.readLine();
@@ -27,6 +46,13 @@ public class Connexion {
 		} 
 	}
 
+	/**
+	 * Ecrit un message au format binaire dans une socket client.
+	 * Si le message est null, rien n'est envoyé
+	 * 
+	 * @param writer le writer de la socket
+	 * @param binary un tableau de byte constituant le message
+	 */
 	public static void writeBinary(DataOutputStream writer, byte[] binary) {
 		if(binary == null)
 			return;
@@ -39,6 +65,13 @@ public class Connexion {
 		System.out.println("Message envoyé : " + binary.length +" octet");
 	}
 	
+	/**
+	 * Lit un message au format binaire depuis une socket client
+	 * 
+	 * @param reader le reader de la socket
+	 * 
+	 * @return un tableau de byte correspondant au message envoyé par la socket, null s'il y a eu une erreur de transmission
+	 */
 	public static byte[] readBinary(DataInputStream reader) {
 		byte[] retour = new byte[4096];
 		try {

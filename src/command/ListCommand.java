@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import server.DataCommand;
+import server.ThreadData;
 import server.FtpReply;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
@@ -22,7 +22,7 @@ public class ListCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
 	public FtpReply executeLogged(String data, UserState userState) {
-		new DataCommand(data, userState, this).start();
+		new ThreadData(data, userState, this).start();
 		return null;
 	}
 

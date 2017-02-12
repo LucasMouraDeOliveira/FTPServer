@@ -5,6 +5,11 @@ import java.text.Normalizer;
 import server.FtpLongReply;
 import server.FtpReply;
 
+/**
+ * Classe utilitaire listant les codes de retours utilisés par le serveur
+ * 
+ * @author Lucas Moura de Oliveira
+ */
 public class FtpStatusCodes {
 	
 	public final static String CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE = "125";
@@ -51,10 +56,27 @@ public class FtpStatusCodes {
 	
 	public final static String CODE_550_ACTION_NON_REALISEE = "550";
 	
+	/**
+	 * Construit une FTPReply en fonction d'un code de retour et d'un message
+	 * 
+	 * @param FTPStatusCode le code de retour
+	 * @param message le message de retour
+	 * 
+	 * @return une réponse FTP
+	 */
 	public static FtpReply buildReply(String FTPStatusCode, String message){
 		return buildReply(FTPStatusCode, message, true);
 	}
 	
+	/**
+	 * Construit une FTPReply en fonction d'un code de retour et d'un message
+	 * 
+	 * @param FTPStatusCode le code de retour
+	 * @param message le message de retour
+	 * @param removeAccents si vrai, on retire les accents du message (évite les erreurs d'encodage)
+	 * 
+	 * @return une réponse FTP
+	 */
 	public static FtpReply buildReply(String FTPStatusCode, String message, boolean removeAccents){
 		if(removeAccents){
 			message = stripAccents(message);
@@ -65,6 +87,13 @@ public class FtpStatusCodes {
 		return reply;
 	}
 	
+	/**
+	 * Construit une FTPLongReply (multi-ligne) en fonction d'un code de retour et d'un message
+	 * 
+	 * @param FTPStatusCode le code de retour
+	 * @param message le message de retour
+	 * @return une réponse FTP multi-ligne
+	 */
 	public static FtpLongReply buildLongReply(String FTPStatusCode, String message){
 		FtpLongReply longReply = new FtpLongReply();
 		longReply.setCode(FTPStatusCode);
@@ -72,6 +101,13 @@ public class FtpStatusCodes {
 		return longReply;
 	}
 	
+	/**
+	 * Retire les accents d'une chaine de caractères
+	 * 
+	 * @param s la chaine de caractères
+	 * 
+	 * @return la chaine de caractères sans accents
+	 */
 	public static String stripAccents(String s) {
 	    s = Normalizer.normalize(s, Normalizer.Form.NFD);
 	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
