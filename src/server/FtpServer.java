@@ -45,14 +45,12 @@ public class FtpServer {
 	public FtpServer() throws NoPropertyFileException, BadPropertyException, IOException{
 		this.autoConfigure();
 		this.commandPool = new CommandPool();
-		this.serverSocket = new ServerSocket(commandPort);
 		System.out.println("Serveur ouvert sur le port " + commandPort + " avec la configuration standard");
 	}
 	
 	public FtpServer(String defaultCommandPort, String defaultDataPort, String homeDir) throws BadPropertyException, NullPropertyException, IOException {
 		this.configure(defaultCommandPort, defaultDataPort, homeDir);
 		this.commandPool = new CommandPool();
-		this.serverSocket = new ServerSocket(commandPort);
 		System.out.println("Serveur ouvert sur le port " + commandPort + " avec la configuration personnalisée");
 	}
 	
@@ -106,6 +104,7 @@ public class FtpServer {
 	 * @throws IOException si une IOException a lieu lors de l'écoute de connexion
 	 */
 	public void startServer() throws IOException{
+		this.serverSocket = new ServerSocket(commandPort);
 		while(true){
 			new ThreadCommand(this, serverSocket.accept(), commandPool).start();
 		} 
