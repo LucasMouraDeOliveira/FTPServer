@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 /**
  * Classe utilitaire gérant l'envoi et la réception de messages par sockets
@@ -73,13 +74,19 @@ public class Connexion {
 	 * @return un tableau de byte correspondant au message envoyé par la socket, null s'il y a eu une erreur de transmission
 	 */
 	public static byte[] readBinary(DataInputStream reader) {
-		byte[] retour = new byte[4096];
+		byte[] data = new byte[4096];
+		int numread = 0;
 		try {
-			reader.read(retour);
+			numread = reader.read(data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return retour;
+		if(numread <= 0)
+			return null;
+		else if (numread == data.length) 
+			return data;
+	    else
+	        return Arrays.copyOf(data, numread);
 	}
 
 }
