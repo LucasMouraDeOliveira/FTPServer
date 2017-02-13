@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import server.FtpReply;
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * 

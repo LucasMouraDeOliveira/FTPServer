@@ -4,8 +4,8 @@ import java.net.Socket;
 
 import server.FtpReply;
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * Implémentation de la commande MLST (non implémentée)

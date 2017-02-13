@@ -2,7 +2,7 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
-import utility.UserState;
+import user.UserState;
 
 /**
  * Interface des commandes FTP.

@@ -7,9 +7,6 @@ package errors;
  */
 public class NoPropertyFileException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2791834471681124790L;
 	
 	public NoPropertyFileException(String filePath) {

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import command.CommandPool;
+import user.UserState;
 import utility.Connexion;
-import utility.UserState;
 
 /**
  * Gère les échanges de messages entre le serveur et un client sur le port de commande

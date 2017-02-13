@@ -3,7 +3,7 @@ package command;
 import java.net.Socket;
 
 import server.FtpReply;
-import utility.UserState;
+import user.UserState;
 
 /**
  * Interface implémentée par les commandes qui ont besoin d'envoyer des informations par la socket de données

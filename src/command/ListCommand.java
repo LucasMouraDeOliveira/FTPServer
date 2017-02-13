@@ -8,9 +8,9 @@ import java.net.Socket;
 import server.FtpReply;
 import server.FtpServer;
 import server.ThreadData;
+import user.UserState;
 import utility.Connexion;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * Implémentation de la commande LIST
