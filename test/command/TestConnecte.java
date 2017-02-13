@@ -7,14 +7,13 @@ import java.net.Socket;
 import org.junit.After;
 import org.junit.Before;
 
-import server.FTPLauncher;
-import utilitary.UserState;
+import utility.UserState;
 
 public class TestConnecte {
 
-	UserState userState;
-	Serverbidon sb;
-	Socket socket;
+	protected UserState userState;
+	protected Serverbidon sb;
+	protected Socket socket;
 	
 	@Before
 	public void init(){
