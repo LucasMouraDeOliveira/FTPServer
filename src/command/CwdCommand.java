@@ -36,7 +36,8 @@ public class CwdCommand extends LoggedCommand {
 					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
 							"Erreur lors de la résolution du chemin de fichier");
 				}
-				if(!UserHandler.userHaveRight(userState.getUser(), f)){
+				
+				if(!newpath.equals(UserHandler.getRoot(userState.getUser())) && !UserHandler.userHaveRight(userState.getUser(), f)){
 					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 							"Vous n'avez pas les droits requis pour vous déplacer dans ce dossier");
 				}

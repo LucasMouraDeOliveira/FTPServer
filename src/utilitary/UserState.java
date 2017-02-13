@@ -36,6 +36,8 @@ public class UserState {
 	
 	private File renameFile;
 	
+	public UserState() {}
+	
 	public UserState(Socket socket) {
 		this.controlPort = socket.getPort();
 		this.controlSocket = socket;

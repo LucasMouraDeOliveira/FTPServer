@@ -67,7 +67,7 @@ public class UserHandler {
 	 */
 	public static boolean userHaveRight(String login, File f){
 		try {
-			return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login));
+			return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -29,10 +29,10 @@ public class MkdCommand extends LoggedCommand {
 		File f = p2.toFile();
 		if(f.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
-					"Le fichier n'existe pas");
+					"Le dossier existe");
 		}else if(!UserHandler.userHaveRight(userState.getUser(), f)){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Le fichier n'est pas accessible");
+					"Le dossier n'est pas accessible");
 		}
 		if(f.mkdirs()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 
