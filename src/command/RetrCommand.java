@@ -8,11 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import server.ThreadData;
 import server.FtpReply;
+import server.FtpServer;
+import server.ThreadData;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
-import utilitary.UserHandler;
 import utilitary.UserState;
 
 /**
@@ -27,7 +27,7 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 	protected Path path;
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		Path p  = Paths.get(userState.getRepository());
 		path = p.resolve(data);
 		File file = path.toFile();
@@ -35,9 +35,14 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier n'existe pas");
 		} 
-		if(!UserHandler.userHaveRight(userState.getUser(), file)){
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Le fichier n'est pas accessible");
+		try {
+			if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
+				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+						"Le fichier n'est pas accessible");
+			}
+		} catch (IOException e) {
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
+					"Erreur lors de la récupération des droits utilisateurs");
 		}
 				
 		new ThreadData(data, userState, this).start();

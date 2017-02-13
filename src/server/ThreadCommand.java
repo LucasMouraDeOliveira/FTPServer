@@ -15,18 +15,26 @@ import utilitary.UserState;
  */
 public class ThreadCommand extends Thread {
 	
+	protected CommandPool commandPool;
+	
+	protected FtpServer server;
+	
 	protected Socket socket;
+	
 	protected UserState state;
 	
 	protected boolean socketOpen;
 	
 	/**
-	 * Initialise les informations du clients
 	 * 
-	 * @param socket la socket client
+	 * @param server
+	 * @param socket
+	 * @param commandPool
 	 */
-	public ThreadCommand(Socket socket) {
+	public ThreadCommand(FtpServer server, Socket socket, CommandPool commandPool) {
+		this.server = server;
 		this.socket = socket;
+		this.commandPool = commandPool;
 		this.state = new UserState(socket);
 		this.socketOpen = true;
 	}
@@ -77,7 +85,7 @@ public class ThreadCommand extends Thread {
 	 * @return la réponse à la commande
  	 */
 	public FtpReply interpreteCommand(String command, String data){
-		return CommandPool.getInstance().handle(command, data, this.state);
+		return commandPool.handle(command, data, this.state, this.server);
 	}
 	
 	/**

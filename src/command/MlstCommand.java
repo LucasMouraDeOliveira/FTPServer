@@ -1,19 +1,15 @@
 package command;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 
-import server.ThreadData;
 import server.FtpReply;
-import utilitary.Connexion;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
 /**
- * Implémentation de la commande MLST
- * Je ne sais pas ce qu'elle fait ...
+ * Implémentation de la commande MLST (non implémentée)
+ * 
  * 
  * @author Lucas Moura de Oliveira
  *
@@ -21,43 +17,29 @@ import utilitary.UserState;
 public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
-		new ThreadData(data, userState, this).start();
-		return null;
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_202_COMMANDE_NON_PRISE_EN_CHARGE, 
+				"Commande non implémentée");
 	}
 
 	@Override
 	public void executeThread(String data, UserState userState, Socket dataSocket) {
-		File folder = new File(userState.getRepository());
-		File[] files = folder.listFiles();
-		String retour = "";
-		for(File file : files){
-			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
-		}
-		try {
-			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
-			Connexion.write(writer, retour);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		File folder = new File(userState.getRepository());
+//		File[] files = folder.listFiles();
+//		String retour = "";
+//		for(File file : files){
+//			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
+//		}
+//		try {
+//			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
+//			Connexion.write(writer, retour);
+//			writer.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		return;
 	}
 
-	/**
-	 * Retourne le type d'un fichier.
-	 * Si le fichier est un dossier, retourne dir, sinon retourne l'extension du fichier
-	 * 
-	 * @param file le fichier
-	 * 
-	 * @return le type du fichier
-	 */
-	private String getType(File file) {
-		if(file.isDirectory()){
-			return "dir";
-		}
-		return file.getName().split(".")[1];
-	}
-	
 	@Override
 	public FtpReply getStartCode() {
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_125_CONNEXION_ETABLIE_TRANSFERT_DEMARRE, 

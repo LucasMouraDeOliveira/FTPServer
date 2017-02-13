@@ -1,12 +1,13 @@
 package command;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
-import utilitary.UserHandler;
 import utilitary.UserState;
 
 /**
@@ -19,7 +20,7 @@ import utilitary.UserState;
 public class MkdCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		if(data == null){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_501_ERREUR_DE_SYNTAXE, 
 					"Le nom de fichier est manquant");
@@ -30,9 +31,17 @@ public class MkdCommand extends LoggedCommand {
 		if(f.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le dossier existe");
-		}else if(!UserHandler.userHaveRight(userState.getUser(), f)){
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Le dossier n'est pas accessible");
+		} else {
+			try {
+				if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
+					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+							"Le dossier n'est pas accessible");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
+						"Erreur lors de la récupération des droits utilisateurs");
+			}
 		}
 		if(f.mkdirs()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 

@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import server.ThreadData;
 import server.FtpReply;
+import server.FtpServer;
+import server.ThreadData;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
@@ -21,7 +22,7 @@ import utilitary.UserState;
 public class NlstCommand extends LoggedCommand implements DataCommandExecutor {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		new ThreadData(data, userState, this).start();
 		return new FtpReply();
 	}

@@ -2,7 +2,9 @@ package utilitary;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -12,15 +14,31 @@ import java.util.Map;
  */
 public class UserHandler {
 	
-	public static Map<String,String> users;
+	public Map<String,String> users;
 	
-	public static String root;
+	protected String dossierRoot;
+	
+	public UserHandler(String dossierRoot) throws IOException{
+		this.dossierRoot = dossierRoot;
+		this.initUsers();
+	}
 
-	static {
-		users = new HashMap<String,String>();
-		users.put("lucas", "l");
-		users.put("eliott", "e");
-		users.put("admin", "admin");
+	private void initUsers() throws IOException{
+		this.addUser("lucas", "l");
+		this.addUser("eliott", "e");
+		this.addUser("admin", "admin");
+	}
+	
+	private void addUser(String login, String password) throws IOException{
+		if(this.users.containsKey(login)){
+			return;
+		}
+		this.users.put(login, password);
+		String root = getRoot(login);
+		Path pathRoot = Paths.get(root);
+		if(!Files.exists(pathRoot)){
+			Files.createDirectories(pathRoot);
+		}
 	}
 	
 	/**
@@ -30,8 +48,8 @@ public class UserHandler {
 	 * 
 	 * @return vrai si l'utilisateur existe
 	 */
-	public static boolean userExists(String login){
-		return users.containsKey(login);
+	public boolean userExists(String login){
+		return this.users.containsKey(login);
 	}
 	
 	/**
@@ -42,8 +60,8 @@ public class UserHandler {
 	 * 
 	 * @return vrai si le mot de passe de l'utilisateur est correct
 	 */
-	public static boolean isPasswordCorrect(String login, String password){
-		return userExists(login) && users.get(login).equals(password);
+	public boolean isPasswordCorrect(String login, String password){
+		return this.userExists(login) && this.users.get(login).equals(password);
 	}
 	
 	/**
@@ -53,8 +71,8 @@ public class UserHandler {
 	 * 
 	 * @return le dossier root de l'utilisateur
 	 */
-	public static String getRoot(String login){
-		return root+login;
+	public String getRoot(String login){
+		return dossierRoot+"/"+login;
 	}
 	
 	/**
@@ -65,12 +83,7 @@ public class UserHandler {
 	 * 
 	 * @return vrai si l'utilisateur à le droit d'accéder au fichier (s'il se trouve dans son dossier root)
 	 */
-	public static boolean userHaveRight(String login, File f){
-		try {
-			return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public boolean userHaveRight(String login, File f) throws IOException{
+		return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");
 	}
 }

@@ -9,11 +9,11 @@ import java.net.Socket;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import server.ThreadData;
 import server.FtpReply;
+import server.FtpServer;
+import server.ThreadData;
 import utilitary.Connexion;
 import utilitary.FtpStatusCodes;
-import utilitary.UserHandler;
 import utilitary.UserState;
 
 /**
@@ -29,7 +29,7 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 	protected File file;
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		Path p  = Paths.get(userState.getRepository());
 		Path p2 = p.resolve(data);
 		file = p2.toFile();
@@ -37,9 +37,15 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier existe déjà");
 		} 
-		if(!UserHandler.userHaveRight(userState.getUser(), file)){
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Vous n'avez pas les droits pour uploader ce fichier ici");
+		try {
+			if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
+				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+						"Vous n'avez pas les droits pour uploader ce fichier ici");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
+					"Erreur lors de la récupération des droits utilisateurs");
 		}
 		new ThreadData(data, userState, this).start();
 		return new FtpReply();

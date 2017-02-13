@@ -1,6 +1,7 @@
 package command;
 
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
@@ -14,7 +15,7 @@ import utilitary.UserState;
 public class UserCommand implements Command {
 
 	@Override
-	public FtpReply execute(String data, UserState userState) {
+	public FtpReply execute(String data, UserState userState, FtpServer server) {
 		userState.setUser(data);
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_331_USER_OK_NEED_PASSWORD, 
 				"Mot de passe attendu");

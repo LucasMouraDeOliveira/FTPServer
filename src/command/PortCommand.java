@@ -3,6 +3,7 @@ package command;
 import java.net.UnknownHostException;
 
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
@@ -19,7 +20,7 @@ import utilitary.UserState;
 public class PortCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		String[] datas = data.split(",");
 		try {
 			userState.setDataAddress("1", datas[0]+"."+datas[1]+"."+datas[2]+"."+datas[3]);

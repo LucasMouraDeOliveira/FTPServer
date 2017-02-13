@@ -1,7 +1,7 @@
 package command;
 
-import server.FTPLauncher;
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
@@ -16,8 +16,8 @@ import utilitary.UserState;
 public class EpsvCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
-		String port = ""+FTPLauncher.FTP_PORT_FILE;
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
+		String port = ""+server.getDataPort();
 		userState.setDataPort(Integer.valueOf(port));
 		userState.setActive(false);
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_229_MODE_PASSIF_ETENDU_ACTIVE, 

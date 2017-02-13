@@ -1,12 +1,13 @@
 package command;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
-import utilitary.UserHandler;
 import utilitary.UserState;
 
 /**
@@ -21,7 +22,7 @@ import utilitary.UserState;
 public class RnfrCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		if(data == null){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_501_ERREUR_DE_SYNTAXE, 
 					"Le nom de fichier est manquant");
@@ -32,9 +33,17 @@ public class RnfrCommand extends LoggedCommand {
 		if(!f.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier n'existe pas");
-		}else if(!UserHandler.userHaveRight(userState.getUser(), f)){
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-					"Le fichier n'est pas accessible");
+		}else {
+			try {
+				if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
+					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+							"Le fichier n'est pas accessible");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
+						"Erreur lors de la récupération des droits utilisateurs");
+			}
 		}
 		userState.setRenameFile(f);
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_350_EN_ATTENTE_D_INFORMATION_SUPPLEMENTAIRE, 

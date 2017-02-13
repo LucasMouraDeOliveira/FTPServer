@@ -1,6 +1,7 @@
 package command;
 
 import server.FtpReply;
+import server.FtpServer;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
 
@@ -14,7 +15,7 @@ import utilitary.UserState;
 public class TypeCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_502_COMMANDE_NON_IMPLEMENTEE, 
 				"Commande non implémentée");
 	}

@@ -3,7 +3,7 @@ package command;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 
-import server.FTPLauncher;
+import server.FtpServer;
 import server.FtpReply;
 import utilitary.FtpStatusCodes;
 import utilitary.UserState;
@@ -20,8 +20,8 @@ import utilitary.UserState;
 public class PasvCommand extends LoggedCommand {
 
 	@Override
-	public FtpReply executeLogged(String data, UserState userState) {
-		Integer dataPort = FTPLauncher.FTP_PORT_FILE;
+	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
+		Integer dataPort = server.getDataPort();
 		Integer p1 = dataPort/256;
 		Integer p2 = dataPort%256;
 		
