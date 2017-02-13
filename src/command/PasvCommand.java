@@ -4,9 +4,9 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 
 import server.FtpServer;
+import utility.FtpStatusCodes;
+import utility.UserState;
 import server.FtpReply;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
 
 /**
  * Implémentation de la commande PASV

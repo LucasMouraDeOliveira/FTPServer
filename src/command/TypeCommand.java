@@ -2,8 +2,8 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * Implémentation de la commande TYPE
@@ -16,7 +16,7 @@ public class TypeCommand extends LoggedCommand {
 
 	@Override
 	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
-		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_502_COMMANDE_NON_IMPLEMENTEE, 
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 
 				"Commande non implémentée");
 	}
 

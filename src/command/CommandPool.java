@@ -4,16 +4,16 @@ import java.util.HashMap;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
- * Implémentation du pattern Command qui permet de stocker la liste des commandes FTP reconnues par l'application.
- * Les commandes sont stockées dans une map qui associe à un nom de commande (ex : USER) une implémentation de commande.
- * Dans le cas où une commande possède un ou plusieurs alias (comme MKD et XMKD), on associe deux noms au même objet commande.
+ * 
+ * <p>Implémentation du pattern Command qui permet de stocker la liste des commandes FTP reconnues par l'application.
+ * Les commandes sont stockées dans une map qui associe à un nom de commande (ex : USER) une implémentation de commande.</p>
+ * <p>Dans le cas où une commande possède un ou plusieurs alias (comme MKD et XMKD), on associe deux noms au même objet commande.</p>
  * 
  * @author Lucas Moura de Oliveira
- *
  */
 public class CommandPool {
 	
@@ -21,7 +21,7 @@ public class CommandPool {
 	
 	
 	/**
-	 * Initialise la commandPool
+	 * Initialise la commandPool avec une liste de commandes reconnues par l'application.
 	 */
 	public CommandPool() {
 		this.commands = new HashMap<String, Command>();
@@ -73,6 +73,7 @@ public class CommandPool {
 	 * @param command le code de la commande reçue
 	 * @param data les paramètres de la commande
 	 * @param userState l'état de l'utilisateur, qui contient les informations relatives à sa session
+	 * @param server le serveur
 	 * 
 	 * @return un code qui correspond au code de retour de la commande, 404 si la commande n'est pas reconnue par l'application
 	 */

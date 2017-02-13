@@ -8,9 +8,9 @@ import java.net.Socket;
 import server.FtpReply;
 import server.FtpServer;
 import server.ThreadData;
-import utilitary.Connexion;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.Connexion;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * Implémentation de la commande NLST

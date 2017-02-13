@@ -2,8 +2,8 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * Implémentation de la commande PWD et de son alias XPWD

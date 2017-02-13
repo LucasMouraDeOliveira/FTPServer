@@ -2,7 +2,7 @@ package server;
 
 /**
  * Classe de gestion des messages de retour.
- * Une réponse FTP simple est composée d'un code de retour, d'un espace puis d'un message (optionnel) 
+ * Une réponse FTP simple est composée d'un code de retour, d'un espace puis d'un message (optionnel).
  * 
  * @author Lucas Moura de Oliveira
  */

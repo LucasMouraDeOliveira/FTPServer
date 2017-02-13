@@ -1,4 +1,4 @@
-package utilitary;
+package utility;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -162,7 +162,7 @@ public class UserState {
 	
 	/**
 	 * Met en mémoire le nom de fichier à renommer pour la commande RNFR
-	 * @param le nom du fichier à renommer
+	 * @param f le fichier à renommer
 	 */
 	public void setRenameFile(File f) {
 		this.renameFile = f;

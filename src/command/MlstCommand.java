@@ -4,8 +4,8 @@ import java.net.Socket;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * Implémentation de la commande MLST (non implémentée)
@@ -18,7 +18,7 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
 	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
-		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_202_COMMANDE_NON_PRISE_EN_CHARGE, 
+		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_502_COMMANDE_NON_IMPLEMENTEE, 
 				"Commande non implémentée");
 	}
 

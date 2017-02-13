@@ -1,4 +1,4 @@
-package utilitary;
+package utility;
 
 import java.text.Normalizer;
 
@@ -6,7 +6,13 @@ import server.FtpLongReply;
 import server.FtpReply;
 
 /**
- * Classe utilitaire listant les codes de retours utilisés par le serveur
+ * <p>Classe utilitaire listant les codes de retours utilisés par le serveur.
+ * Les codes sont statiques puisqu'ils sont susceptibles d'être appellés dans toutes les commandes,
+ * et également à d'autre endroit du programme, il semble donc peu pratique de faire transiter un objet dans tous
+ * les appels de méthodes.
+ * </p>
+ * {@link FtpStatusCodes} fonctionne également comme une factory et contient donc des méthodes utilitaires 
+ * permettant de créer facilement les réponses aux commandes des utilisateurs ({@link server.FtpReply}).
  * 
  * @author Lucas Moura de Oliveira
  */

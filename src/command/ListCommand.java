@@ -8,9 +8,9 @@ import java.net.Socket;
 import server.FtpReply;
 import server.FtpServer;
 import server.ThreadData;
-import utilitary.Connexion;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.Connexion;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * Implémentation de la commande LIST
@@ -24,7 +24,7 @@ public class ListCommand extends LoggedCommand implements DataCommandExecutor{
 	@Override
 	public FtpReply executeLogged(String data, UserState userState, FtpServer ftpServer) {
 		new ThreadData(data, userState, this).start();
-		return null;
+		return new FtpReply();
 	}
 
 	@Override

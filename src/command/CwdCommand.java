@@ -7,15 +7,19 @@ import java.nio.file.Paths;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
- * Implémentation de la commande CWD et de son alias XCWD.
- * Met à jour le dossier courant de l'utilisateur. 
+ * <p>Implémentation de la commande CWD et de son alias XCWD.
+ * Met à jour le dossier courant de l'utilisateur et retourne un code 250 en cas de succès.</p> 
+ * <p>Les erreurs suivantes peuvent être déclenchées :</p> 
+ * <ul>
+ * <li>500 : erreur interne </li>
+ * <li>550 : Action non réalisée (l'utilisateur n'a pas les droit d'accès au dossier)</li>
+ * </ul>
  * 
  * @author Lucas Moura de Oliveira
- *
  */
 public class CwdCommand extends LoggedCommand {
 

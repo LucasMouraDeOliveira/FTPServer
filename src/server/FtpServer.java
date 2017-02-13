@@ -10,7 +10,7 @@ import command.CommandPool;
 import errors.BadPropertyException;
 import errors.NoPropertyFileException;
 import errors.NullPropertyException;
-import utilitary.UserHandler;
+import utility.UserHandler;
 
 /**
  * Lance un serveur FTP sur un port spécifié soit par un fichier de configuration, 
@@ -37,6 +37,10 @@ public class FtpServer {
 	
 	/**
 	 * Démarre le meilleur serveur FTP du monde
+	 *
+	 * @throws NoPropertyFileException si le fichier de configuration est introuvable
+	 * @throws BadPropertyException si l'une des propriétés du fichier de configuration ou l'un des arguments en ligne de commande est invalide
+	 * @throws IOException si la serverSocket n'a pas pu s'ouvrir
 	 */
 	public FtpServer() throws NoPropertyFileException, BadPropertyException, IOException{
 		this.autoConfigure();

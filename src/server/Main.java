@@ -7,7 +7,14 @@ import errors.NoPropertyFileException;
 import errors.NullPropertyException;
 
 /**
- * Launcher de l'application
+ * Launcher de l'application. Le main prend trois arguments :
+ * <ul>
+ * 	<li>Le numéro de port de commande</li>
+ * 	<li>Le numéro de port de données par défaut</li>
+ * 	<li>Le dossier root du serveur, dans lequel seront crées les dossiers des utilisateurs</li>
+ * </ul>
+ * 
+ * Les paramètres sont optionnels, s'ils en manque au moins un, le fichier de configuration par défaut de l'application sera utilisé
  * 
  * @author Lucas Moura de Oliveira
  */

@@ -2,7 +2,7 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.UserState;
+import utility.UserState;
 
 /**
  * Interface des commandes FTP.
@@ -21,7 +21,7 @@ public interface Command {
 	 * @param userState la session utilisateur
 	 * @param server le serveur
 	 * 
-	 * @return un code de retour au format texte
+	 * @return un code de retour sous la forme d'une {@link FtpReply}.
 	 */
 	public abstract FtpReply execute(String parameter, UserState userState, FtpServer server);
 

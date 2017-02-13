@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import command.CommandPool;
-import utilitary.Connexion;
-import utilitary.UserState;
+import utility.Connexion;
+import utility.UserState;
 
 /**
  * Gère les échanges de messages entre le serveur et un client sur le port de commande
@@ -26,10 +26,11 @@ public class ThreadCommand extends Thread {
 	protected boolean socketOpen;
 	
 	/**
+	 * Lance un thread séparé pour recevoir et envoyer des messages à un client par le biais de la socket de commande
 	 * 
-	 * @param server
-	 * @param socket
-	 * @param commandPool
+	 * @param server le serveur
+	 * @param socket la socket client, connectée sur le port de commande
+	 * @param commandPool la pool de commandes reconnues par l'application
 	 */
 	public ThreadCommand(FtpServer server, Socket socket, CommandPool commandPool) {
 		this.server = server;

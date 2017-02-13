@@ -1,10 +1,11 @@
-package utilitary;
+package utility;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,6 +25,7 @@ public class UserHandler {
 	}
 
 	private void initUsers() throws IOException{
+		this.users = new HashMap<String, String>();
 		this.addUser("lucas", "l");
 		this.addUser("eliott", "e");
 		this.addUser("admin", "admin");
@@ -82,6 +84,7 @@ public class UserHandler {
 	 * @param f le fichier/dossier
 	 * 
 	 * @return vrai si l'utilisateur à le droit d'accéder au fichier (s'il se trouve dans son dossier root)
+	 * @throws IOException si une erreur survient lors de la récupération du chemin canonique du fichier
 	 */
 	public boolean userHaveRight(String login, File f) throws IOException{
 		return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");

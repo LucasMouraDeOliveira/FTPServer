@@ -2,8 +2,8 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
-import utilitary.FtpStatusCodes;
-import utilitary.UserState;
+import utility.FtpStatusCodes;
+import utility.UserState;
 
 /**
  * 
@@ -26,6 +26,7 @@ public abstract class LoggedCommand implements Command {
 	 * 
 	 * @param data les paramètres de la commande
 	 * @param userState les informations de la session utilisateur
+	 * @param server le serveur
 	 * 
 	 * @return la réponse renvoyée à l'utilisateur à l'issue du traitement de la commande
 	 */
