@@ -3,8 +3,8 @@ package command;
 import server.FtpLongReply;
 import server.FtpReply;
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * Implémentation de la commande FEAT

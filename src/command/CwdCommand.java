@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 
 import server.FtpReply;
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * <p>Implémentation de la commande CWD et de son alias XCWD.

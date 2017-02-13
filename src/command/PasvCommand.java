@@ -4,8 +4,8 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 import server.FtpReply;
 
 /**

@@ -10,7 +10,7 @@ import command.CommandPool;
 import errors.BadPropertyException;
 import errors.NoPropertyFileException;
 import errors.NullPropertyException;
-import utility.UserHandler;
+import user.UserHandler;
 
 /**
  * Lance un serveur FTP sur un port spécifié soit par un fichier de configuration, 

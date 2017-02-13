@@ -7,8 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import command.DataCommandExecutor;
+import user.UserState;
 import utility.Connexion;
-import utility.UserState;
 
 /**
  * Gère les échanges de messages entre le serveur et un client sur la socket de données.

@@ -2,12 +2,12 @@ package command;
 
 import server.FtpReply;
 import server.FtpServer;
+import user.UserState;
 import utility.FtpStatusCodes;
-import utility.UserState;
 
 /**
  * Implémentation de la commande TYPE
- * Cette commande n'est pas prise en charge et retourne un code 502
+ * Cette commande n'est pas prise en charge et retourne un code 200
  * 
  * @author Lucas Moura de Oliveira
  *
