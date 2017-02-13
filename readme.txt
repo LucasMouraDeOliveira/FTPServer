@@ -13,9 +13,21 @@ Ce logiciel est une implémentation d'un serveur FTP qui respecte (en partie du m
 
 ## Interfaces
 
+- Command.java
+
+- DataCommandExecutor.java
+
 ## Classes abstraites
 
+- LoggedCommand.java
+
 ## Classes polymorphiques
+
+Toutes les classes suffixées par Command implémentent l'interface Command, certains d'entre elles étendent la classe LoggedCommand (les commandes qui nécessitent que l'utilisateur soit connecté). Certaines commandes nécessitent en outre de communiquer par le biais de la socket de données : ces commandes implémentent en plus l'interface DataCommandExecutor
+
+### Commandes non-connectées : 
+
+### Commandes connectées :
 
 ## Try/Catch
 
@@ -53,8 +65,6 @@ L'interface Command définit une seule signature de méthode, execute(), qui est a
   * @return un code de retour au format texte
   */
   public abstract FtpReply execute(String data, UserState userState);
-
-## Singleton
 
 ## FtpReply
 
