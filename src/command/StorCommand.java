@@ -77,13 +77,17 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 		try {
 			reader = new DataInputStream(socket.getInputStream());
 			writer = new DataOutputStream(new FileOutputStream(file));
-			byte[] bytes = Connexion.readBinary(reader);
-			writer.write(bytes);
+			byte[] bytes;
+			while((bytes = Connexion.readBinary(reader)) != null){
+				writer.write(bytes);
+			}
+			writer.close();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
+
 
 	@Override
 	public FtpReply getStartCode() {
