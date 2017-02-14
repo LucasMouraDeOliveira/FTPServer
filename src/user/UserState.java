@@ -134,8 +134,6 @@ public class UserState {
 			dataAddress = Inet4Address.getByName(address);
 		}else if("2".equals(mode)){
 			dataAddress = Inet6Address.getByName(address);
-		}else{
-			//TODO erreur : mode inconnu (retourner 500)
 		}
 	}
 	
