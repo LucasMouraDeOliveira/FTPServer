@@ -6,8 +6,29 @@ Eliott Bricout
 
 13/02/2017
 
+
 #Introduction
+
 Ce logiciel est une implémentation d'un serveur FTP qui respecte (en partie du moins) la RFC 959 (https://tools.ietf.org/html/rfc959).
+
+
+#Execution 
+
+java -jar ftpserver.jar [FTP_PORT_COMMAND] [FTP_PORT_FILE] [path vers le dossier root]
+exemple : 
+java -jar ftpserver.jar 2021 2022 ./root
+
+Ici le dossier root se créera automatiquement à côté du jar mais vous pouvez choisir un dossier autre dossier.
+
+Il y a aussi un fichier de configuration (configuration.properties) à coté du jar avec  par exemple:
+
+FTP_PORT_FILE=2020
+FTP_PORT_COMMAND=2021
+ROOT=C:/Users/brico/Documents/GitHub/FTPServer/root
+
+Qui permet de lancer directement le jar sans argument 
+puisqu'ils seront récupérés automatiquement dans ce fichier.
+
 
 #Architecture
 
