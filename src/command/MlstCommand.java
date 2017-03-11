@@ -13,9 +13,7 @@ import utility.Connexion;
 import utility.FtpStatusCodes;
 
 /**
- * Implémentation de la commande MLST (non implémentée)
- * 
- * 
+ *
  * @author Lucas Moura de Oliveira
  *
  */
@@ -35,14 +33,16 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 		for(File file : files){
 			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
 		}
-		try {
-			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
-			Connexion.write(writer, retour);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(retour != ""){
+			retour = retour.substring(0, retour.length()-1);
+			try {
+				PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
+				Connexion.write(writer, retour);
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return;
 	}
 
 	private String getType(File file) {

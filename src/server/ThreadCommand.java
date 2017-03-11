@@ -52,6 +52,10 @@ public class ThreadCommand extends Thread {
 			}
 			String[] data = message.split(" ", 2);
 			FtpReply reply;
+			if(data[0] == "QUIT"){
+				this.socketOpen = false;
+				continue;
+			}
 			if(data.length == 1){
 				reply = interpreteCommand(data[0], null);
 			} else {

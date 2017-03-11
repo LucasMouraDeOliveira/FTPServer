@@ -34,13 +34,16 @@ public class ListCommand extends LoggedCommand implements DataCommandExecutor{
 		String retour = "";
 		for(File file : files){
 			retour+=file.getName()+"\n";
-		}
-		try {
-			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
-			Connexion.write(writer, retour);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		}		
+		if(retour!= ""){
+			retour = retour.substring(0, retour.length()-1);
+			try {
+				PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
+				Connexion.write(writer, retour);
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
