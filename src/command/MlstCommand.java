@@ -1,10 +1,14 @@
 package command;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import server.FtpReply;
 import server.FtpServer;
 import user.UserState;
+import utility.Connexion;
 import utility.FtpStatusCodes;
 
 /**
@@ -24,20 +28,24 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
 	public void executeThread(String data, UserState userState, Socket dataSocket) {
-//		File folder = new File(userState.getRepository());
-//		File[] files = folder.listFiles();
-//		String retour = "";
-//		for(File file : files){
-//			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
-//		}
-//		try {
-//			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
-//			Connexion.write(writer, retour);
-//			writer.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		File folder = new File(userState.getRepository());
+		File[] files = folder.listFiles();
+		String retour = "";
+		for(File file : files){
+			retour+="type="+ getType(file)+"; size="+file.getTotalSpace()+"; modify="+file.lastModified()+"; "+file.getName()+"\n";
+		}
+		try {
+			PrintWriter writer = new PrintWriter(dataSocket.getOutputStream());
+			Connexion.write(writer, retour);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return;
+	}
+
+	private String getType(File file) {
+		return file.isDirectory() ? "directory" : "file";
 	}
 
 	@Override
