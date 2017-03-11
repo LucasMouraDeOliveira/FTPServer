@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import server.FtpReply;
 import server.FtpServer;
+import server.ThreadData;
 import user.UserState;
 import utility.Connexion;
 import utility.FtpStatusCodes;
@@ -22,8 +23,8 @@ public class MlstCommand extends LoggedCommand implements DataCommandExecutor{
 
 	@Override
 	public FtpReply executeLogged(String data, UserState userState, FtpServer server) {
-		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_502_COMMANDE_NON_IMPLEMENTEE, 
-				"Commande non implémentée");
+		new ThreadData(data, userState, this).start();
+		return new FtpReply();
 	}
 
 	@Override
