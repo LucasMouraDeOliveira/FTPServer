@@ -52,7 +52,7 @@ public class ThreadCommand extends Thread {
 			}
 			String[] data = message.split(" ", 2);
 			FtpReply reply;
-			if(data[0] == "QUIT"){
+			if(data[0].equals("QUIT")){
 				this.socketOpen = false;
 				continue;
 			}
