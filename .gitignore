@@ -1,2 +1,14 @@
 /bin/
 /target/
+
+*.prefs
+*.project
+.classpath
+*.project
+.project
+configuration.properties
+*.properties
+*.properties
+.project
+*.properties
+.project
