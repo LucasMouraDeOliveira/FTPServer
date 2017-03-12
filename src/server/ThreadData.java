@@ -46,7 +46,9 @@ public class ThreadData extends Thread{
 	
 	@Override
 	public void run(){
+		System.out.println("Starting to connect");
 		this.connectSocket();
+		System.out.println("Connected");
 		if(this.dataSocket.isConnected() && !this.dataSocket.isClosed()){
 			dataCommandExecutor.executeThread(this.data, this.userState, this.dataSocket);
 		}
@@ -80,16 +82,16 @@ public class ThreadData extends Thread{
 	}
 	
 	/**
-	 * Démarre la connexion (soit en mode passif soit en mode actif en fonction de ce qui a été choisi par le client)
-	 * et envoi un message à l'utilisateur attestant que la connexion est active.
+	 * Envoie un message à l'utilisateur attestant que la connexion est active et
+	 * démarre la connexion (soit en mode passif soit en mode actif en fonction de ce qui a été choisi par le client)
 	 */
 	public void connectSocket(){
+		Connexion.write(userState.getWriter(), dataCommandExecutor.getStartCode().toString());
 		if(userState.isActive()){
 			this.openActiveSocket();
 		}else{
 			this.openPassiveSocket();
 		}
-		Connexion.write(userState.getWriter(), dataCommandExecutor.getStartCode().toString());
 	}
 	
 	/**

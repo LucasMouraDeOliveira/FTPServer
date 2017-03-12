@@ -1,4 +1,4 @@
-package lordkadoc;
+package command;
 
 import java.io.IOException;
 

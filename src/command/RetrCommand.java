@@ -31,18 +31,15 @@ public class RetrCommand extends LoggedCommand implements DataCommandExecutor{
 		Path p  = Paths.get(userState.getRepository());
 		path = p.resolve(data);
 		File file = path.toFile();
+		
 		if(!file.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier n'existe pas");
 		} 
-		try {
-			if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
-				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-						"Le fichier n'est pas accessible");
-			}
-		} catch (IOException e) {
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
-					"Erreur lors de la récupération des droits utilisateurs");
+		
+		if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+					"Le fichier n'est pas accessible");
 		}
 				
 		new ThreadData(data, userState, this).start();

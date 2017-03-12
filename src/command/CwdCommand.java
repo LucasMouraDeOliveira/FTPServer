@@ -36,20 +36,12 @@ public class CwdCommand extends LoggedCommand {
 				try {
 					newpath = f.getCanonicalPath().replace('\\', '/');
 				} catch (IOException e) {
-					e.printStackTrace();
 					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
 							"Erreur lors de la résolution du chemin de fichier");
 				}
-				
-				try {
-					if(!newpath.equals(server.getUserHandler().getRoot(userState.getUser())) && !server.getUserHandler().userHaveRight(userState.getUser(), f)){
-						return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
-								"Vous n'avez pas les droits requis pour vous déplacer dans ce dossier");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
-							"Erreur lors de la résolution des droits utilisateurs");
+				if(!newpath.equals(server.getUserHandler().getRoot(userState.getUser())) && !server.getUserHandler().userHaveRight(userState.getUser(), f)){
+					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
+							"Vous n'avez pas les droits requis pour vous déplacer dans ce dossier");
 				}
 				userState.setRepository(newpath);
 			}else{

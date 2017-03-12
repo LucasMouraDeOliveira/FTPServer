@@ -1,7 +1,6 @@
 package command;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -33,18 +32,11 @@ public class RnfrCommand extends LoggedCommand {
 		if(!f.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier n'existe pas");
-		}else {
-			try {
-				if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
-					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-							"Le fichier n'est pas accessible");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
-						"Erreur lors de la récupération des droits utilisateurs");
-			}
+		}else if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+					"Le fichier n'est pas accessible");
 		}
+			
 		userState.setRenameFile(f);
 		return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_350_EN_ATTENTE_D_INFORMATION_SUPPLEMENTAIRE, 
 				"Besoin d'informations supplémentaires");

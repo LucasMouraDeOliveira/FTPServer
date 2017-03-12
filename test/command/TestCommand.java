@@ -1,4 +1,4 @@
-package lordkadoc;
+package command;
 
 import org.junit.Before;
 import org.junit.Test;
