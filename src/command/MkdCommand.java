@@ -1,7 +1,6 @@
 package command;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -31,17 +30,9 @@ public class MkdCommand extends LoggedCommand {
 		if(f.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le dossier existe");
-		} else {
-			try {
-				if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
-					return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-							"Le dossier n'est pas accessible");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE, 
-						"Erreur lors de la récupération des droits utilisateurs");
-			}
+		} else if(!server.getUserHandler().userHaveRight(userState.getUser(), f)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+					"Le dossier n'est pas accessible");
 		}
 		if(f.mkdirs()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_200_ACTION_REALISEE_AVEC_SUCCES, 

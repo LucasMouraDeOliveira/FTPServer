@@ -1,4 +1,4 @@
-package lordkadoc;
+package command;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +24,12 @@ public class TestMkdCommand extends TestConnected{
 		assertEquals("200", reply.getCode());
 		assertTrue(new File(userState.getRepository() + "/testMkd").exists());
 		new File(userState.getRepository() + "/testMkd").delete();
+	}
+	
+	@Test
+	public void testCodeErreurParametreNull() {
+		FtpReply reply = this.command.execute(null, userState, server);
+		assertEquals("501", reply.getCode());
 	}
 	
 	@Test

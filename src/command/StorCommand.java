@@ -36,17 +36,13 @@ public class StorCommand extends LoggedCommand implements DataCommandExecutor{
 		if(file.exists()){
 			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE, 
 					"Le fichier existe déjà");
-		} 
-		try {
-			if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
-				return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
-						"Vous n'avez pas les droits pour uploader ce fichier ici");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_500_ERREUR_INTERNE,
-					"Erreur lors de la récupération des droits utilisateurs");
 		}
+		
+		if(!server.getUserHandler().userHaveRight(userState.getUser(), file)){
+			return FtpStatusCodes.buildReply(FtpStatusCodes.CODE_550_ACTION_NON_REALISEE,
+					"Vous n'avez pas les droits pour uploader ce fichier ici");
+		}
+	
 		new ThreadData(data, userState, this).start();
 		return new FtpReply();
 	}

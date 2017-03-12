@@ -1,4 +1,4 @@
-package lordkadoc;
+package command;
 
 import java.io.File;
 
@@ -35,9 +35,16 @@ public class TestRmdCommand extends TestConnected{
 	
 	@Test
 	public void testCodeErreurPasLeDroitAcces() {
-		//on ne crée pas le dossier
+		new File("../testMkd").mkdir();
 		FtpReply ftpReply = this.command.execute("../testMkd", userState, server);
 		Assert.assertEquals("550", ftpReply.getCode());
+		new File("../testMkd").delete();
+	}
+	
+	@Test
+	public void testCodeErreurParametreNull() {
+		FtpReply ftpReply = this.command.execute(null, userState, server);
+		Assert.assertEquals("501", ftpReply.getCode());
 	}
 
 }

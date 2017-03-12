@@ -88,9 +88,14 @@ public class UserHandler {
 	 * @param f le fichier/dossier
 	 * 
 	 * @return vrai si l'utilisateur à le droit d'accéder au fichier (s'il se trouve dans son dossier root)
-	 * @throws IOException si une erreur survient lors de la récupération du chemin canonique du fichier
 	 */
-	public boolean userHaveRight(String login, File f) throws IOException{
-		return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");
+	public boolean userHaveRight(String login, File f){
+		try {
+			return f.getCanonicalPath().replace('\\', '/').startsWith(getRoot(login)+"/");
+		} catch (IOException e) {
+			/* L'erreur ne devrait jamais arriver, mais dans le cas ou ça arrive on affiche le message d'erreur */
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
