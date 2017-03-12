@@ -12,3 +12,8 @@ configuration.properties
 .project
 *.properties
 .project
+.project
+*.properties
+.project
+*.properties
+configuration.properties
